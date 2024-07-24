@@ -28,4 +28,4 @@ public class UsuarioTest {
         Assertions.assertEquals("Nome e obrigatorio!", validationException.getMessage());
     }
 
-}
+} 
