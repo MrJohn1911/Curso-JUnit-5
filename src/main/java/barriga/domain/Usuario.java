@@ -2,6 +2,8 @@ package barriga.domain;
 
 import barriga.domain.exception.ValidationException;
 
+import java.util.Objects;
+
 public class Usuario {
     public Usuario(String email, Long id, String nome, String senha) {
         if(nome == null) {
@@ -16,31 +18,49 @@ public class Usuario {
             throw new ValidationException("Senha e obrigatoria!");
         }
 
-        _email = email;
-        _id = id;
-        _nome = nome;
-        _senha = senha;
+        this.email = email;
+        this.id = id;
+        this.nome = nome;
+        this.senha = senha;
     }
 
     public String getEmail() {
-        return _email;
+        return email;
     }
 
     public Long getId() {
-        return _id;
+        return id;
     }
 
     public String getNome() {
-        return _nome;
+        return nome;
     }
 
     public String getSenha() {
-        return _senha;
+        return senha;
     }
 
-    private String _email;
-    private Long _id;
-    private String _nome;
-    private String _senha;
+    @Override
+    public boolean equals(Object object) {
+        if (this == object)
+            return true;
+        if (object == null || getClass() != object.getClass())
+            return false;
+
+        Usuario usuario = (Usuario) object;
+        return Objects.equals(email, usuario.email)
+                && Objects.equals(nome, usuario.nome)
+                && Objects.equals(senha, usuario.senha);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, nome, senha);
+    }
+
+    private String email;
+    private Long id;
+    private String nome;
+    private String senha;
 
 }

@@ -48,8 +48,6 @@ public class UsuarioBuilder {
     private String _email;
     private Long _id;
     private String _nome;
-
     private String _senha;
-
 
 }
