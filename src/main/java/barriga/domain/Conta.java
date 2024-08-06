@@ -2,6 +2,8 @@ package barriga.domain;
 
 import barriga.domain.exception.ValidationException;
 
+import java.util.Objects;
+
 public class Conta {
 
     public Conta(Long id, String nome, Usuario usuario) {
@@ -31,4 +33,17 @@ public class Conta {
     private String nome;
 
     private Usuario usuario;
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Conta conta = (Conta) object;
+        return Objects.equals(id, conta.id) && Objects.equals(nome, conta.nome) && Objects.equals(usuario, conta.usuario);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, usuario);
+    }
 }
