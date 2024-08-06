@@ -8,9 +8,7 @@ import barriga.service.repositories.ContaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.management.modelmbean.ModelMBeanOperationInfo;
@@ -33,7 +31,8 @@ public class ContaServiceTest {
         Conta contaSalva = contaService.salvar(contaASerSalva);
         Assertions.assertNotNull(contaSalva.getId());
 
-        Mockito.verify(contaRepository).salvar(Mockito.any());
+        Mockito.verify(contaRepository).salvar(contaCaptor.capture());
+        Assertions.assertTrue(contaCaptor.getValue().getNome().startsWith("Test"));
     }
 
     @Test
@@ -88,6 +87,9 @@ public class ContaServiceTest {
 
         Mockito.verify(contaRepository).delete(contaSalvaMock);
     }
+
+    @Captor
+    private ArgumentCaptor<Conta> contaCaptor;
 
     @InjectMocks
     private ContaService contaService;
