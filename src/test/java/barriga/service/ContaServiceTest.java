@@ -20,10 +20,10 @@ import java.util.Arrays;
 public class ContaServiceTest {
 
     @Test
-    public void deveSalvarComSucesso() throws Exception {
+    public void deveSalvarContaComSucesso() throws Exception {
         Conta contaASerSalva = ContaBuilder.buildConta().setId(null).build();
 
-        Mockito.when(contaRepository.salvar(contaASerSalva))
+        Mockito.when(contaRepository.salvar(Mockito.any(Conta.class)))
                 .thenReturn(ContaBuilder.buildConta().build());
 
         Mockito.doNothing()
@@ -31,9 +31,9 @@ public class ContaServiceTest {
                 .dispatch(ContaBuilder.buildConta().build(), ContaEvent.EventType.CREATED);
 
         Conta contaSalva = contaService.salvar(contaASerSalva);
-
         Assertions.assertNotNull(contaSalva.getId());
 
+        Mockito.verify(contaRepository).salvar(Mockito.any());
     }
 
     @Test
